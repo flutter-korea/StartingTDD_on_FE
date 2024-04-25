@@ -45,10 +45,25 @@ final class SelectOption extends ProductScreenEvent {
   final OptionGroups optionGroup;
   final MenuOption option;
 
-  const SelectOption(this.menu, this.optionGroup, this.option);
+  const SelectOption({
+    required this.menu,
+    required this.optionGroup,
+    required this.option,
+  });
 
   @override
   List<Object> get props => [menu, optionGroup, option];
+}
+
+/// 장바구니에 담기
+final class ConfirmSelection extends ProductScreenEvent {
+  const ConfirmSelection();
+
+  @override
+  List<Object> get props => [];
+
+  @override
+  bool get stringify => true;
 }
 
 /// 선택 취소 이벤트

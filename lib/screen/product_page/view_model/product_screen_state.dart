@@ -15,10 +15,10 @@ final class Initial extends ProductScreenState {
   List<Object?> get props => [];
 }
 
-final class LoadedProductScreenState extends ProductScreenState {
+final class SelectingStoreState extends ProductScreenState {
   final List<Store> stores;
 
-  const LoadedProductScreenState(this.stores);
+  const SelectingStoreState(this.stores);
 
   @override
   List<Object> get props => [stores];
