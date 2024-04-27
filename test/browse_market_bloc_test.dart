@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:stdd_ex/domain_objects/menu.dart';
 import 'package:stdd_ex/domain_objects/store.dart';
 import 'package:stdd_ex/screen/product_page/view_model/bloc_product_screen.dart';
 import 'package:stdd_ex/screen/product_page/view_model/product_screen_event.dart';
@@ -67,31 +68,65 @@ void main() {
     });
 
     group("메뉴 선택단계에서는,", () {
-      blocTest<ProductScreenBloc, ProductScreenState>(
+      test(
         "특정 상품을 선택하면, 옵션 선택단계로 진입하며, 상품의 자세한 옵션정보를 확인 할 수 있어야한다.",
-        // given
-        build: () => ProductScreenBloc(storeRepository: mockStoreRepository),
-        seed: () => SelectingMenuState(
-          selectedStore: genRandomStore(),
-          stores: genRandomStores(),
-        ),
-        // when
-        act: (final ProductScreenBloc bloc) =>
-            bloc.add(SelectMenu(genRandomMenu())),
-        // expect : 실패를 예상하는 테스트케이스
-        errors: () => [isA<UnimplementedError>()],
+        () async {
+          // given: sut (system under test) 와 mockRepository 의 예상 결과값을 준비한다.
+          final SelectingMenuState beforeState = SelectingMenuState(
+            selectedStore: genRandomStore(),
+            stores: genRandomStores(),
+          );
+
+          final Menu testingTarget =
+              ([...beforeState.selectedStore.menus]..shuffle()).first;
+
+          final ProductScreenBloc sut = ProductScreenBloc(
+            storeRepository: mockStoreRepository,
+            initialState: beforeState,
+          );
+
+          // when: 유저가 메뉴를 선택하면,
+          sut.add(SelectMenu(testingTarget));
+
+          // then: sut 의 상태가 변경되고,
+          final ProductScreenState state = await sut.stream.first;
+
+          // expect: 이는 옵션 선택단계로 변경되며, 선택한 상품 정보를 포함하고 있어야한다.
+          expect(state, isA<SelectingMenuOptionState>());
+          expect(
+              state,
+              equals(SelectingMenuOptionState(
+                selectedStore: beforeState.selectedStore,
+                stores: beforeState.stores,
+                selectedMenu: testingTarget,
+              )));
+        },
       );
 
-      blocTest<ProductScreenBloc, ProductScreenState>(
+      test(
         "매장 선택단계로 되돌아 갈 수 있어야한다.",
-        // given
-        build: () => ProductScreenBloc(storeRepository: mockStoreRepository),
-        seed: () => SelectingStoreState(genRandomStores()),
-        // when
-        act: (final ProductScreenBloc bloc) =>
-            bloc.add(const CancelSelection()),
-        // expect : 실패를 예상하는 테스트케이스
-        errors: () => [isA<UnimplementedError>()],
+        () async {
+          // given: sut (system under test) 와 mockRepository 의 예상 결과값을 준비한다.
+          final SelectingMenuState beforeState = SelectingMenuState(
+            selectedStore: genRandomStore(),
+            stores: genRandomStores(),
+          );
+
+          final ProductScreenBloc sut = ProductScreenBloc(
+            storeRepository: mockStoreRepository,
+            initialState: beforeState,
+          );
+
+          // when: 유저가 메뉴를 선택하면,
+          sut.add(const CancelSelection());
+
+          // then: sut 의 상태가 변경되고,
+          final ProductScreenState state = await sut.stream.first;
+
+          // expect: 이는 매장 선택단계로 변경되며, 이전 매장 정보를 포함하고 있어야한다.
+          expect(state, isA<SelectingStoreState>());
+          expect(state, equals(SelectingStoreState(beforeState.stores)));
+        },
       );
     });
 

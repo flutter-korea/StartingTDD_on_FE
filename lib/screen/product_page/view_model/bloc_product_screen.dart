@@ -64,7 +64,19 @@ final class ProductScreenBloc
     final SelectMenu event,
     final Emitter<ProductScreenState> emit,
   ) async {
-    throw UnimplementedError();
+    final ProductScreenState currentState = state;
+    switch (currentState) {
+      case Initial():
+      case SelectingStoreState():
+      case SelectingMenuOptionState():
+        break;
+      case SelectingMenuState():
+        emit(SelectingMenuOptionState(
+          selectedStore: currentState.selectedStore,
+          stores: currentState.stores,
+          selectedMenu: event.menu,
+        ));
+    }
   }
 
   Future<void> _onSelectOption(
@@ -78,7 +90,17 @@ final class ProductScreenBloc
     final CancelSelection event,
     final Emitter<ProductScreenState> emit,
   ) async {
-    throw UnimplementedError();
+    final ProductScreenState currentState = state;
+
+    switch (currentState) {
+      case Initial():
+      case SelectingStoreState():
+      case SelectingMenuOptionState():
+        throw UnimplementedError();
+      case SelectingMenuState():
+        emit(SelectingStoreState(currentState.stores));
+        break;
+    }
   }
 
   Future<void> _onConfirmSelection(
