@@ -9,9 +9,6 @@ abstract interface class Menu extends Equatable {
   /// 썸네일 이미지
   abstract final String thumbnail;
 
-  /// 최대 선택가능 개수
-  abstract final int? maxQuantity;
-
   /// 선택 가능한 옵션 목록
   abstract final List<OptionGroups> optionsGroups;
 
@@ -30,9 +27,6 @@ final class MenuImpl implements Menu {
   final String thumbnail;
 
   @override
-  final int? maxQuantity;
-
-  @override
   final List<OptionGroups> optionsGroups;
 
   @override
@@ -44,7 +38,6 @@ final class MenuImpl implements Menu {
   const MenuImpl({
     required this.description,
     required this.thumbnail,
-    required this.maxQuantity,
     required this.optionsGroups,
     required this.defaultPrice,
     required this.id,
@@ -54,7 +47,6 @@ final class MenuImpl implements Menu {
   List<Object?> get props => [
         description,
         thumbnail,
-        maxQuantity,
         optionsGroups,
         defaultPrice,
         id,
@@ -65,7 +57,6 @@ final class MenuImpl implements Menu {
 
   @override
   String toString() => """$description {
-  maxQuantity: $maxQuantity,
   optionsGroups: ${optionsGroups.fold("", (prev, e) => '$prev$e\n')}},
   defaultPrice: $defaultPrice,
   id: $id,

@@ -1,10 +1,17 @@
 import 'package:bloc/bloc.dart';
+import 'package:stdd_ex/domain_objects/store.dart';
+import 'package:stdd_ex/repositroy/store_repo.dart';
 import 'package:stdd_ex/screen/product_page/view_model/product_screen_event.dart';
 import 'package:stdd_ex/screen/product_page/view_model/product_screen_state.dart';
 
 final class ProductScreenBloc
     extends Bloc<ProductScreenEvent, ProductScreenState> {
-  ProductScreenBloc(super.initialState) {
+  final StoreRepository _storeRepository;
+
+  ProductScreenBloc({
+    required final StoreRepository storeRepository,
+  })  : _storeRepository = storeRepository,
+        super(const Initial()) {
     on((
       final ProductScreenEvent event,
       final Emitter<ProductScreenState> emit,
@@ -30,7 +37,8 @@ final class ProductScreenBloc
     final InitializeProductScreen event,
     final Emitter<ProductScreenState> emit,
   ) async {
-    throw UnimplementedError();
+    final List<Store> storeList = await _storeRepository.getStores();
+    emit(SelectingStoreState(storeList));
   }
 
   Future<void> _onSelectStore(

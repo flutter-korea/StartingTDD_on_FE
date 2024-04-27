@@ -31,7 +31,6 @@ Menu genRandomMenu({final int? optionGroupsLength}) {
   return MenuImpl(
     description: Faker().lorem.sentence(),
     thumbnail: Faker().image.image(),
-    maxQuantity: Random().nextInt(10),
     optionsGroups: List.generate(optionGroupsLength ?? Random().nextInt(5) + 1,
         (index) => genRandomOptionGroups()),
     defaultPrice: Decimal.parse(Random().nextInt(1000).toString()),
