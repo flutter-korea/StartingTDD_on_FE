@@ -36,16 +36,33 @@ void main() {
     });
 
     group("매장 선택단계에서는,", () {
-      blocTest<ProductScreenBloc, ProductScreenState>(
+      test(
         "매장을 선택하면 메뉴 선택단계로 진입하며, 매장의 상품정보를 확인 할 수 있어야한다.",
-        // given
-        build: () => ProductScreenBloc(storeRepository: mockStoreRepository),
-        seed: () => SelectingStoreState(genRandomStores()),
-        // when
-        act: (final ProductScreenBloc bloc) =>
-            bloc.add(SelectStore(genRandomStore())),
-        // expect : 실패를 예상하는 테스트케이스
-        errors: () => [isA<UnimplementedError>()],
+        () async {
+          // given: sut (system under test) 와 mockRepository 의 예상 결과값을 준비한다.
+          final SelectingStoreState beforeState =
+              SelectingStoreState(genRandomStores());
+          final Store testingTarget =
+              ([...beforeState.stores]..shuffle()).first;
+
+          final ProductScreenBloc sut = ProductScreenBloc(
+            storeRepository: mockStoreRepository,
+            initialState: beforeState,
+          );
+
+          // when: 유저가 매장을 선택하면,
+          sut.add(SelectStore(testingTarget));
+
+          // then: sut 의 상태가 변경되고,
+          final ProductScreenState state = await sut.stream.first;
+
+          // expect: 이는 메뉴 선택단계로 변경되며, 선택한 매장 정보를 포함하고 있어야한다.
+          expect(state, isA<SelectingMenuState>());
+          expect(
+              state,
+              equals(SelectingMenuState(
+                  selectedStore: testingTarget, stores: beforeState.stores)));
+        },
       );
     });
 

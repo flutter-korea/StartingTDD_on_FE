@@ -10,8 +10,9 @@ final class ProductScreenBloc
 
   ProductScreenBloc({
     required final StoreRepository storeRepository,
+    final ProductScreenState? initialState,
   })  : _storeRepository = storeRepository,
-        super(const Initial()) {
+        super(initialState ?? const Initial()) {
     on((
       final ProductScreenEvent event,
       final Emitter<ProductScreenState> emit,
@@ -45,7 +46,18 @@ final class ProductScreenBloc
     final SelectStore event,
     final Emitter<ProductScreenState> emit,
   ) async {
-    throw UnimplementedError();
+    final ProductScreenState currentState = state;
+    switch (currentState) {
+      case Initial():
+      case SelectingMenuState():
+      case SelectingMenuOptionState():
+        break;
+      case SelectingStoreState():
+        emit(SelectingMenuState(
+          selectedStore: event.store,
+          stores: currentState.stores,
+        ));
+    }
   }
 
   Future<void> _onSelectMenu(
