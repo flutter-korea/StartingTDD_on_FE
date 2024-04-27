@@ -45,16 +45,17 @@ final class SelectingMenuOptionState extends ProductScreenState {
   final List<Store> stores;
   final Menu selectedMenu;
 
-  final Map<OptionGroups, MenuOption> _selectedOptions;
+  final Map<OptionGroups, List<MenuOption>> _selectedOptions;
 
   // depensive copy
-  Map<OptionGroups, MenuOption> get selectedOptions => {..._selectedOptions};
+  Map<OptionGroups, List<MenuOption>> get selectedOptions =>
+      {..._selectedOptions};
 
   const SelectingMenuOptionState({
     required this.selectedStore,
     required this.stores,
     required this.selectedMenu,
-    final Map<OptionGroups, MenuOption>? selectedOptions,
+    final Map<OptionGroups, List<MenuOption>>? selectedOptions,
   }) : _selectedOptions = selectedOptions ?? const {};
 
   @override
