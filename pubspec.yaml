@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   bloc: ^8.1.4
   decimal: ^2.3.3
+  dart_scope_functions: ^0.1.6
   equatable: ^2.0.5
   uuid: ^4.4.0
   flutter_bloc: ^8.1.5

@@ -170,6 +170,9 @@ final class StoreRepositoryImpl implements StoreRepository {
         thumbnail:
             "https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_960_720.jpg",
         id: const UuidV4().generate(),
+        minOrderPrice: Decimal.fromInt(6000),
+        rating: 4.9,
+        reviewCount: 700,
       ),
       StoreImpl(
         description: "피자헛 매장입니다. 맛있는 피자를 만나보세요.",
@@ -328,6 +331,9 @@ final class StoreRepositoryImpl implements StoreRepository {
         thumbnail:
             "https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_960_720.jpg",
         id: const UuidV4().generate(),
+        minOrderPrice: Decimal.fromInt(6000),
+        rating: 4.9,
+        reviewCount: 700,
       ),
       StoreImpl(
         description: "피자헛 매장입니다. 맛있는 피자를 만나보세요.",
@@ -486,6 +492,9 @@ final class StoreRepositoryImpl implements StoreRepository {
         thumbnail:
             "https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_960_720.jpg",
         id: const UuidV4().generate(),
+        minOrderPrice: Decimal.fromInt(6000),
+        rating: 4.9,
+        reviewCount: 700,
       ),
     ];
   }

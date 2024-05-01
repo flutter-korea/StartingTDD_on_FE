@@ -46,6 +46,9 @@ Store genRandomStore({final int? menusLength}) {
     name: Faker().lorem.sentence(),
     thumbnail: Faker().image.image(),
     id: const UuidV4().generate(),
+    minOrderPrice: Decimal.parse(Random().nextInt(1000).toString()),
+    rating: Random().nextDouble() * 5,
+    reviewCount: Random().nextInt(1000),
   );
 }
 

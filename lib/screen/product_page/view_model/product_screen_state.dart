@@ -13,6 +13,9 @@ final class Initial extends ProductScreenState {
 
   @override
   List<Object?> get props => [];
+
+  @override
+  bool get stringify => true;
 }
 
 final class SelectingStoreState extends ProductScreenState {
@@ -22,6 +25,10 @@ final class SelectingStoreState extends ProductScreenState {
 
   @override
   List<Object> get props => [stores];
+
+  @override
+  String toString() =>
+      'SelectingStoreState(stores: ${stores.map((e) => e.id)})';
 }
 
 final class SelectingMenuState extends ProductScreenState {
@@ -38,6 +45,10 @@ final class SelectingMenuState extends ProductScreenState {
         selectedStore,
         stores,
       ];
+
+  @override
+  String toString() =>
+      'SelectingMenuState(selectedStore: ${selectedStore.id}, stores: ${stores.map((e) => e.id)})';
 }
 
 final class SelectingMenuOptionState extends ProductScreenState {
@@ -64,4 +75,8 @@ final class SelectingMenuOptionState extends ProductScreenState {
         stores,
         selectedMenu,
       ];
+
+  @override
+  String toString() =>
+      'SelectingMenuOptionState(selectedStore: ${selectedStore.id}, stores: ${stores.map((e) => e.id)}, selectedMenu: ${selectedMenu.id})';
 }

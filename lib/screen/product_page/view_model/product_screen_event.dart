@@ -27,6 +27,9 @@ final class SelectStore extends ProductScreenEvent {
 
   @override
   List<Object> get props => [store];
+
+  @override
+  String toString() => 'SelectStore(store: ${store.id})';
 }
 
 /// 메뉴 선택 이벤트
@@ -37,6 +40,9 @@ final class SelectMenu extends ProductScreenEvent {
 
   @override
   List<Object> get props => [menu];
+
+  @override
+  String toString() => 'SelectMenu(menu: ${menu.id})';
 }
 
 /// 옵션 선택 이벤트
@@ -53,6 +59,9 @@ final class SelectOption extends ProductScreenEvent {
 
   @override
   List<Object> get props => [menu, optionGroup, option];
+
+  @override
+  String toString() => 'SelectOption(menu: ${menu.id}, optionGroup: $optionGroup, option: ${option.id})';
 }
 
 /// 장바구니에 담기
