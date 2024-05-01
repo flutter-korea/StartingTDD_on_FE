@@ -3,6 +3,8 @@ import 'package:stdd_ex/domain_objects/menu.dart';
 import 'package:stdd_ex/domain_objects/menu_option.dart';
 import 'package:stdd_ex/domain_objects/option_groups.dart';
 import 'package:stdd_ex/domain_objects/store.dart';
+import 'package:stdd_ex/repositroy/store_repo.dart';
+import 'package:stdd_ex/screen/product_page/view_model/product_screen_state.dart';
 
 sealed class ProductScreenEvent extends Equatable {
   const ProductScreenEvent();
@@ -10,7 +12,13 @@ sealed class ProductScreenEvent extends Equatable {
 
 /// 가게 조회 페이지 진입 이벤트
 final class InitializeProductScreen extends ProductScreenEvent {
-  const InitializeProductScreen();
+  final StoreRepository storeRepository;
+  final void Function(SelectingMenuOptionState state) onSubmit;
+
+  const InitializeProductScreen({
+    required this.storeRepository,
+    required this.onSubmit,
+  });
 
   @override
   List<Object> get props => [];
@@ -61,7 +69,8 @@ final class SelectOption extends ProductScreenEvent {
   List<Object> get props => [menu, optionGroup, option];
 
   @override
-  String toString() => 'SelectOption(menu: ${menu.id}, optionGroup: $optionGroup, option: ${option.id})';
+  String toString() =>
+      'SelectOption(menu: ${menu.id}, optionGroup: $optionGroup, option: ${option.id})';
 }
 
 /// 장바구니에 담기

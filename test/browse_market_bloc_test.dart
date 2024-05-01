@@ -22,13 +22,12 @@ void main() {
         final List<Store> expectedStores = genRandomStores();
         when(mockStoreRepository.getStores())
             .thenAnswer((_) async => expectedStores);
-        final ProductScreenBloc sut = ProductScreenBloc(
-          storeRepository: mockStoreRepository,
-          onSubmit: (_) {},
-        );
+        final ProductScreenBloc sut = ProductScreenBloc();
 
         // when: 유저가 페이지에 진입해, 초기화 이벤트를 발생시킨면.
-        sut.add(const InitializeProductScreen());
+        sut.add(InitializeProductScreen(
+            storeRepository: mockStoreRepository,
+            onSubmit: (SelectingMenuOptionState state) {}));
 
         // then: sut 의 상태가 변경되고,
         final ProductScreenState state = await sut.stream.first;
@@ -50,8 +49,6 @@ void main() {
               ([...beforeState.stores]..shuffle()).first;
 
           final ProductScreenBloc sut = ProductScreenBloc(
-            storeRepository: mockStoreRepository,
-            onSubmit: (_) {},
             initialState: beforeState,
           );
 
@@ -85,8 +82,6 @@ void main() {
               ([...beforeState.selectedStore.menus]..shuffle()).first;
 
           final ProductScreenBloc sut = ProductScreenBloc(
-            storeRepository: mockStoreRepository,
-            onSubmit: (_) {},
             initialState: beforeState,
           );
 
@@ -118,8 +113,6 @@ void main() {
           );
 
           final ProductScreenBloc sut = ProductScreenBloc(
-            storeRepository: mockStoreRepository,
-            onSubmit: (_) {},
             initialState: beforeState,
           );
 
@@ -153,8 +146,6 @@ void main() {
               (targetOptionGroup.options..shuffle()).first;
 
           final ProductScreenBloc sut = ProductScreenBloc(
-            storeRepository: mockStoreRepository,
-            onSubmit: (_) {},
             initialState: beforeState,
           );
 
@@ -209,8 +200,6 @@ void main() {
               });
 
           final ProductScreenBloc sut = ProductScreenBloc(
-            storeRepository: mockStoreRepository,
-            onSubmit: (_) {},
             initialState: beforeState,
           );
 
@@ -251,10 +240,9 @@ void main() {
           }
 
           final ProductScreenBloc sut = ProductScreenBloc(
-            storeRepository: mockStoreRepository,
-            onSubmit: onSubmit,
             initialState: beforeState,
           );
+          sut.onSubmit = onSubmit;
 
           // when: 유저가 상품을 확정하면,
           sut.add(const ConfirmSelection());
@@ -280,8 +268,6 @@ void main() {
           );
 
           final ProductScreenBloc sut = ProductScreenBloc(
-            storeRepository: mockStoreRepository,
-            onSubmit: (_) {},
             initialState: beforeState,
           );
 
