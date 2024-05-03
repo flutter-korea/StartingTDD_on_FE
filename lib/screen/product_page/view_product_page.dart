@@ -8,6 +8,7 @@ import 'package:stdd_ex/screen/product_page/view/select_store_body.dart';
 import 'package:stdd_ex/screen/product_page/view_model/bloc_product_screen.dart';
 import 'package:stdd_ex/screen/product_page/view_model/product_screen_state.dart';
 import 'package:stdd_ex/screen/product_page/view_model/product_screen_event.dart';
+import 'package:toast/toast.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
@@ -20,12 +21,13 @@ class _ProductPageState extends State<ProductPage> {
   @override
   void initState() {
     super.initState();
+    ToastContext().init(context);
     ProductScreenBloc.instance.add(InitializeProductScreen(
         storeRepository: StoreRepositoryImpl(),
-        onSubmit: (_) => showDialog(
-              context: context,
-              builder: (BuildContext context) => const Text('장바구니 담기 완료'),
-            )));
+        onSubmit: (final SelectingMenuOptionState state) {
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Toast.show('장바구니에 상품이 추가되었습니다.');
+        }));
   }
 
   @override

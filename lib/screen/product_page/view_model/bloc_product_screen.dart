@@ -161,8 +161,8 @@ final class ProductScreenBloc
       case SelectingMenuState():
         break;
       case SelectingMenuOptionState():
-        onSubmit(currentState);
         emit(SelectingStoreState(currentState.stores));
+        onSubmit(currentState);
     }
   }
 }

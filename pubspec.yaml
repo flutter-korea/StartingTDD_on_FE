@@ -16,6 +16,7 @@ dependencies:
   equatable: ^2.0.5
   uuid: ^4.4.0
   flutter_bloc: ^8.1.5
+  toast: ^0.3.0
 
 dev_dependencies:
   bloc_test: ^9.1.7
