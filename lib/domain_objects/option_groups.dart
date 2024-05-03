@@ -58,7 +58,7 @@ final class OptionGroupsImpl implements OptionGroups {
   String toString() => """$description {
   maxQuantity: $maxQuantity,
   minQuantity: $minQuantity,
-  options: ${options.fold("", (prev, element) => '$prev$element\n')}
+  options: ${options.fold("", (prev, element) => '$prev, "${element.description}"')}
   id: $id
 }""";
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stdd_ex/domain_objects/menu.dart';
 import 'package:stdd_ex/domain_objects/store.dart';
+import 'package:stdd_ex/screen/product_page/view/select_menu_option_screen.dart';
 import 'package:stdd_ex/screen/product_page/view_model/bloc_product_screen.dart';
 import 'package:stdd_ex/screen/product_page/view_model/product_screen_event.dart';
 import 'package:stdd_ex/screen/product_page/view_model/product_screen_state.dart';
@@ -23,8 +24,11 @@ class SelectMenuScreen extends StatelessWidget {
           if (state is SelectingMenuOptionState &&
               (ModalRoute.of(context)?.isCurrent ?? false)) {
             Navigator.of(context)
-                .push(MaterialPageRoute(
-                    builder: (_) => const Text("SelectingMenuOptionState")))
+                .push(
+                  MaterialPageRoute(
+                    builder: (_) => SelectMenuOptionScreen(state: state),
+                  ),
+                )
                 .then((value) =>
                     ProductScreenBloc.instance.add(const CancelSelection()));
           }
@@ -71,9 +75,13 @@ class SelectMenuScreenBody extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            toolbarHeight: 150,
-            automaticallyImplyLeading: false,
-            title: Image.network(store.thumbnail),
+            expandedHeight: 200,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Image.network(
+                store.thumbnail,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           SliverList(
             delegate: SliverChildListDelegate(

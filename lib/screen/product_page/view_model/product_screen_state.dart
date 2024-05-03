@@ -74,9 +74,10 @@ final class SelectingMenuOptionState extends ProductScreenState {
         selectedStore,
         stores,
         selectedMenu,
+        _selectedOptions,
       ];
 
   @override
   String toString() =>
-      'SelectingMenuOptionState(selectedStore: ${selectedStore.id}, stores: ${stores.map((e) => e.id)}, selectedMenu: ${selectedMenu.id})';
+      'SelectingMenuOptionState(\nselectedStore: ${selectedStore.id},\n stores: ${stores.map((e) => e.id)},\n selectedMenu: ${selectedMenu.id}, \n selectedOptions: ${_selectedOptions.map((key, value) => MapEntry(key.id, value.map((e) => e.id)))})';
 }
